@@ -1,0 +1,31 @@
+    <!-- Bandeau cookie générique -->
+<style>
+  #cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-color);
+    color: var(--text-color);
+    padding: 16px 24px;
+    margin: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    border-top: 1px solid #444;
+  }
+  #cookie-banner button {
+    background: var(--button-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+</style>
+
+<div id="cookie-banner">
+  <span>Ce site utilise des cookies pour améliorer votre expérience. 🍪</span>
+  <button onclick="document.getElementById('cookie-banner').style.display='none'">J'accepte</button>
+</div>

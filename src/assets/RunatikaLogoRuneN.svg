@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="130 90 90 130" width="150" height="260" role="img" aria-label="Rune N stylisée Runatika">
+  <g stroke="#FFAE42" stroke-width="10" fill="none" stroke-linejoin="round" stroke-linecap="round" transform="translate(-15,0)">
+    <!-- Barre verticale gauche -->
+    <line x1="140" y1="100" x2="140" y2="210"></line>
+    <!-- Barre verticale droite -->
+    <line x1="190" y1="100" x2="190" y2="210"></line>
+    <!-- Diagonale entre les deux -->
+    <line x1="140" y1="100" x2="190" y2="210"></line>
+  </g>
+</svg>

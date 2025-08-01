@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<style>
+  main.legal.cgv {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Helvetica Neue', sans-serif;
+    line-height: 1.7;
+    color: var(--text-color);
+  }
+  .legal.cgv h1 {
+    font-size: 28px;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+  }
+  .legal.cgv ul {
+    padding-left: 20px;
+    list-style: disc;
+  }
+  .legal.cgv li + li {
+    margin-top: 10px;
+  }
+  .legal.cgv p {
+    margin: 10px 0 20px;
+  }
+</style>
+
+<BaseLayout>
+<main class="legal cgv">
+  <h1>Conditions Générales de Vente</h1>
+  <p>Les présentes CGV régissent les ventes effectuées sur le site de Lightmatter.</p>
+  <ul>
+    <li>Commandes : Toute commande implique l'acceptation des CGV.</li>
+    <li>Paiement : Les paiements sont sécurisés et exigibles à la commande.</li>
+    <li>Droit de rétractation : Délai de 14 jours conformément à la loi.</li>
+    <li>Litiges : Résolution à l'amiable privilégiée avant toute procédure.</li>
+  </ul>
+</main>
+</BaseLayout>

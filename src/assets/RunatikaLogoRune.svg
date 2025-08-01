@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="135 90 75 130" width="150" height="260" role="img" aria-label="Rune Raidho stylisée Runatika">
+  <g stroke="#FFAE42" stroke-width="10" fill="none" stroke-linejoin="round" stroke-linecap="round" transform="translate(-15,0)">
+    <!-- Barre verticale -->
+    <line x1="150" y1="100" x2="150" y2="210"></line>
+    <!-- Branche oblique supérieure -->
+    <line x1="150" y1="100" x2="195" y2="140"></line>
+    <!-- Branche oblique inférieure -->
+    <line x1="150" y1="155" x2="200" y2="195"></line>
+    <!-- Fermeture haute ajustée -->
+    <line x1="195" y1="140" x2="150" y2="150"></line>
+  </g>
+</svg>

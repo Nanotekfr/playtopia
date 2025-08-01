@@ -1,0 +1,96 @@
+<!-- affichage admin event -->
+---
+const today = new Date().toISOString().slice(0, 16); // yyyy-MM-ddThh:mm
+const types = ["TCG", "Jeux de plateau", "Animation", "Soirée spéciale", "Autre"];
+---
+
+<style>
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: #1a0f1f;
+    border: 2px solid #8C5B9E;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 0 18px #5a326e88;
+    max-width: 500px;
+    margin: 1rem auto;
+  }
+
+  label {
+    font-weight: bold;
+    color: var(--color-accent);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+  }
+
+  input, select, textarea {
+    padding: 0.6rem;
+    border-radius: 6px;
+    border: none;
+    background: #2b1b33;
+    color: #eee;
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  input[type="submit"] {
+    background: var(--color-accent);
+    color: #1a0f1f;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  input[type="submit"]:hover {
+    background: #ffc76a;
+  }
+</style>
+
+<form onsubmit="handleSubmit(event)">
+  <div>
+    <label for="titre">Titre</label>
+    <input type="text" id="titre" name="titre" required />
+  </div>
+
+  <div>
+    <label for="description">Description</label>
+    <textarea id="description" name="description" rows="3" required></textarea>
+  </div>
+
+  <div>
+    <label for="date">Date & heure</label>
+    <input type="datetime-local" id="date" name="date" min={today} required />
+  </div>
+
+  <div>
+    <label for="type">Type</label>
+    <select id="type" name="type" required>
+      {types.map(type => (
+        <option value={type}>{type}</option>
+      ))}
+    </select>
+  </div>
+
+  <input type="submit" value="Enregistrer l’événement" />
+</form>
+
+<script type="module">
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    // Ajoute un ID temporaire (horodaté)
+    data.id = `evt-${Date.now()}`;
+
+    // Sauvegarde locale dans localStorage (ou console pour l’instant)
+    let existing = JSON.parse(localStorage.getItem("runatika-events") || "[]");
+    existing.push(data);
+    localStorage.setItem("runatika-events", JSON.stringify(existing));
+
+    alert("Événement ajouté !");
+    form.reset();
+  }
+</script>

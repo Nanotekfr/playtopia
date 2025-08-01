@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<style>
+  main.legal.cgu {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Helvetica Neue', sans-serif;
+    line-height: 1.7;
+    color: var(--text-color);
+  }
+  .legal.cgu h1 {
+    font-size: 28px;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+  }
+  .legal.cgu ul {
+    padding-left: 20px;
+    list-style: disc;
+  }
+  .legal.cgu li + li {
+    margin-top: 10px;
+  }
+  .legal.cgu p {
+    margin: 10px 0 20px;
+  }
+</style>
+
+<BaseLayout>
+<main class="legal cgu">
+  <h1>Conditions Générales d'Utilisation</h1>
+  <p>En naviguant sur notre site, vous acceptez les conditions ci-dessous :</p>
+  <ul>
+    <li>Respect des droits de propriété intellectuelle.</li>
+    <li>Utilisation légale et respectueuse du site.</li>
+    <li>Protection de vos données personnelles selon le RGPD.</li>
+  </ul>
+</main>
+</BaseLayout>

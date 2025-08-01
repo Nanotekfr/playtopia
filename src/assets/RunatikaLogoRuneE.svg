@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="130 90 90 130" width="150" height="260" role="img" aria-label="Rune E stylisée Runatika">
+  <g stroke="#FFAE42" stroke-width="10" fill="none" stroke-linejoin="round" stroke-linecap="round" transform="translate(-15,0)">
+    <!-- Barre verticale -->
+    <line x1="140" y1="100" x2="140" y2="210"></line>
+    <!-- Barre horizontale haute -->
+    <line x1="140" y1="100" x2="190" y2="100"></line>
+    <!-- Barre horizontale centrale -->
+    <line x1="140" y1="155" x2="180" y2="155"></line>
+    <!-- Barre horizontale basse -->
+    <line x1="140" y1="210" x2="190" y2="210"></line>
+  </g>
+</svg>

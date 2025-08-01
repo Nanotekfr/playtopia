@@ -1,0 +1,128 @@
+---
+// Props
+const {
+  horaires = [
+    { jour: "Lundi", heures: "Fermé" },
+    { jour: "Mardi", heures: "16h – 22h" },
+    { jour: "Mercredi", heures: "14h – 22h" },
+    { jour: "Jeudi", heures: "16h – 23h" },
+    { jour: "Vendredi", heures: "16h – 00h" },
+    { jour: "Samedi", heures: "14h – 00h" },
+    { jour: "Dimanche", heures: "14h – 20h" },
+  ],
+  adresse = "Fives Cail, Lille",
+  mapUrl = "https://www.google.com/maps/embed?pb=...",
+} = Astro.props;
+
+const adresseQuery = encodeURIComponent(adresse);
+const itineraireUrl = `https://www.google.com/maps/dir/?api=1&destination=${adresseQuery}`;
+---
+
+<style>
+  .card {
+    width: 100%;
+    max-width: 600px;
+    background: #1a0f1f;
+    border: 2px solid #5A326E;
+    border-radius: 16px;
+    box-shadow: 0 0 20px #5a326e55;
+    font-family: 'Orbitron', sans-serif;
+    overflow: hidden;
+    color: #eee;
+    margin-bottom: 100px;
+  }
+
+  .card-header {
+    background: linear-gradient(to right, #5A326E, #8C5B9E);
+    padding: 1rem 1.5rem;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 6px #000;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .horaires {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #ccc;
+  }
+
+  .map-container {
+    width: 100%;
+    height: 300px;
+    border: 2px solid #FFAE42;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 0 12px #ffaa42aa;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .adresse {
+    text-align: center;
+    font-size: 0.95rem;
+    color: #aaa;
+    margin-top: -0.5rem;
+  }
+
+  .cta-button {
+    align-self: center;
+    margin-top: 0.5rem;
+    padding: 0.7rem 1.6rem;
+    border-radius: 30px;
+    background: #FFAE42;
+    color: #1a0f1f;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #ffaa42aa;
+  }
+
+  .cta-button:hover {
+    background: #ffc76a;
+    box-shadow: 0 0 16px #ffb84d;
+  }
+</style>
+
+<div class="card">
+  <div class="card-header">Infos pratiques</div>
+  <div class="card-body">
+    <div class="horaires">
+      {horaires.map((item: { jour: unknown; heures: unknown; }) => (
+        <>
+          <div><strong>{item.jour}</strong></div>
+          <div>{item.heures}</div>
+        </>
+      ))}
+    </div>
+
+    <div class="map-container">
+      <iframe
+        src={mapUrl}
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+
+    <div class="adresse">{adresse}</div>
+
+    <a class="cta-button" href={itineraireUrl} target="_blank" rel="noopener noreferrer">
+      Itinéraire
+    </a>
+  </div>
+</div>

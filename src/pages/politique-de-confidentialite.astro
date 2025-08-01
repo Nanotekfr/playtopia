@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<style>
+  main.legal.politique {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Helvetica Neue', sans-serif;
+    line-height: 1.7;
+    color: var(--text-color);
+  }
+  .legal.politique h1 {
+    font-size: 28px;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+  }
+  .legal.politique ul {
+    padding-left: 20px;
+    list-style: disc;
+  }
+  .legal.politique li + li {
+    margin-top: 10px;
+  }
+  .legal.politique p {
+    margin: 10px 0 20px;
+  }
+</style>
+
+<BaseLayout>
+<main class="legal politique">
+  <h1>Politique de Confidentialité</h1>
+  <p><strong>1. Qui sommes-nous ?</strong><br>
+  Lightmatter est un projet de lieu ludique dédié au divertissement. Nous prenons très au sérieux la confidentialité de vos données.</p>
+
+  <p><strong>2. Quelles données sont collectées ?</strong></p>
+  <ul>
+    <li>Votre adresse e-mail (via l'inscription à la newsletter)</li>
+    <li>Les données techniques (type navigateur, durée de visite) via les cookies</li>
+  </ul>
+
+  <p><strong>3. À quoi servent vos données ?</strong></p>
+  <ul>
+    <li>Vous envoyer des infos utiles et cool (et pas du spam)</li>
+    <li>Améliorer votre expérience sur le site</li>
+    <li>Suivre les statistiques anonymes de fréquentation</li>
+  </ul>
+
+  <p><strong>4. Où sont stockées vos données ?</strong><br>
+  Les données sont stockées sur des serveurs sécurisés, hébergés dans l’UE. Si un service tiers (comme un outil d’emailing) est utilisé, il respecte aussi le RGPD.</p>
+
+  <p><strong>5. Cookies ?</strong><br>
+  Oui, comme tout le monde. On utilise uniquement des cookies utiles à la navigation et à l’analyse statistique (genre Matomo ou Plausible, pas Google qui vous piste partout).</p>
+
+  <p><strong>6. Vos droits</strong></p>
+  <ul>
+    <li>Accéder à vos données</li>
+    <li>Les corriger</li>
+    <li>Demander leur suppression</li>
+    <li>Vous désabonner à tout moment</li>
+  </ul>
+
+  <p><strong>7. Contact</strong><br>
+  Une question ? Écris-nous à contact@lightmatter.com<br>
+  On répond vite. Enfin… sauf les jours où on joue à Mario Kart 🎮</p>
+</main>
+</BaseLayout>

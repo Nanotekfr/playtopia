@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="130 90 140 130" width="180" height="260" role="img" aria-label="Rune A stylisée Runatika">
+  <g stroke="#FFAE42" stroke-width="10" fill="none" stroke-linejoin="round" stroke-linecap="round" transform="translate(-15,0)">
+    <!-- Forme principale du A -->
+    <polyline points="150,210 185,100 220,210"></polyline>
+    <!-- Barre horizontale du A, bien centrée -->
+    <line x1="165" y1="170" x2="205" y2="170"></line>
+  </g>
+</svg>

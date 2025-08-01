@@ -1,0 +1,53 @@
+<!-- affichage public event -->
+---
+const { titre, description, date, type } = Astro.props;
+const d = new Date(date).toLocaleString('fr-FR', {
+  weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit'
+});
+---
+
+<style>
+  .card {
+    background: #1a0f1f;
+    border: 2px solid #8C5B9E;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 12px #5a326e55;
+  }
+
+  h2 {
+    color: #FFAE42;
+    font-family: 'Orbitron', sans-serif;
+    margin: 0;
+  }
+
+  .date {
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+  }
+
+  p {
+    color: #eee;
+    margin: 0.8rem 0;
+  }
+
+  .tag {
+    display: inline-block;
+    background: #FFAE42;
+    color: #1a0f1f;
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+</style>
+
+<div class="card">
+  <h2>{titre}</h2>
+  <div class="date">{d}</div>
+  <p>{description}</p>
+  <div class="tag">{type}</div>
+</div>

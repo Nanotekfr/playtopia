@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="130 90 100 130" width="180" height="260" role="img" aria-label="Rune K stylisée Runatika">
+  <g stroke="#FFAE42" stroke-width="10" fill="none" stroke-linejoin="round" stroke-linecap="round" transform="translate(-15,0)">
+    <!-- Barre verticale -->
+    <line x1="150" y1="100" x2="150" y2="210"></line>
+    <!-- Branche oblique supérieure -->
+    <line x1="150" y1="155" x2="200" y2="110"></line>
+    <!-- Branche oblique inférieure -->
+    <line x1="150" y1="155" x2="200" y2="210"></line>
+  </g>
+</svg>

@@ -1,0 +1,189 @@
+---
+import RunatikaLogo from '../assets/RunatikaLogoRune.svg';
+import Social from './Social.astro';
+---
+
+<style>
+  
+/*   body.light {
+    --bg-color: white;
+    --text-color: black;
+  } */
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-bottom: 1px solid #222;
+    font-family: 'Helvetica Neue', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .logo {
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 2px;
+    text-transform: ;
+    text-decoration: none;
+  }
+
+  .logo span {
+    display: inline-block;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .burger,
+  .toggle-theme {
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+  }
+
+  .nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+    /* Underline animé */
+    .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0%;
+    height: 2px;
+    background: var(--accent-color);
+    transition: width 0.3s ease-in-out;
+  }
+
+  .nav-links a.active::after,
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+
+  .contact-button {
+    color: white;
+    border: none;
+    text-transform: uppercase;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+   /* ========== Responsive ========== */
+  @media (max-width: 768px) {
+    .nav-links {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      width: 75%;
+      max-width: 300px;
+      background: var(--bg-color);
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px 20px;
+      transform: translateX(100%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .nav-links.show {
+      transform: translateX(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .nav-links a {
+      font-size: 18px;
+      margin: 12px 0;
+    }
+
+    .burger {
+      display: block;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .burger {
+      display: none;
+    }
+  }
+
+  /* Desktop only: cacher le burger, mais garder l’icône thème */
+  @media (min-width: 769px) {
+    .burger {
+      display: none;
+    }
+  }
+</style>
+
+<nav>
+    <a href="/" class="logo" aria-label="Accueil Runatika">
+    <span class="logo-span" role="img" aria-label="Logo Runatika">
+      <RunatikaLogo width={30} height={30} />unetika
+    </span>
+  </a>
+
+  <div class="controls">
+    <!-- <button class="toggle-theme" onclick="toggleTheme()">🌓</button> -->
+    <button class="burger" onclick="toggleMenu()">☰</button>
+  </div>
+
+  <div class="nav-links" id="navLinks">
+    <a href="/evenements">Events</a>
+    <a href="/boutique">Boutique</a>
+    <a href="/actualité">Actualité</a>
+    <a href="/contact" class="contact-button">Contactez-nous</a>
+  </div>
+  <div>
+    <Social/>
+  </div>
+</nav>
+
+<script is:inline>
+  function toggleMenu() {
+    const menu = document.getElementById('navLinks');
+    menu.classList.toggle('show');
+  }
+
+  // function toggleTheme() {
+  // const body = document.body;
+  // const isLight = body.classList.toggle('light');
+  // localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  // }
+
+  // Appliquer le thème sauvegardé
+  // window.addEventListener('DOMContentLoaded', () => {
+    // const savedTheme = localStorage.getItem('theme');
+    // if (savedTheme === 'light') {
+      // document.body.classList.add('light');
+    // }
+  // });
+</script>
