@@ -4,11 +4,6 @@ import Social from './Social.astro';
 ---
 
 <style>
-  
-/*   body.light {
-    --bg-color: white;
-    --text-color: black;
-  } */
 
   nav {
     position: sticky;
@@ -17,11 +12,10 @@ import Social from './Social.astro';
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    background-color: var(--bg-color);
+    padding: 10px 200px;
+    background-color: var(--bg-nav);
     color: var(--text-color);
     border-bottom: 1px solid #222;
-    font-family: 'Helvetica Neue', sans-serif;
     transition: background-color 0.3s, color 0.3s;
   }
 
@@ -56,7 +50,6 @@ import Social from './Social.astro';
   .nav-links {
     display: flex;
     gap: 30px;
-    align-items: center;
     transition: max-height 0.4s ease, opacity 0.3s ease;
   }
 
@@ -157,10 +150,9 @@ import Social from './Social.astro';
   </div>
 
   <div class="nav-links" id="navLinks">
-    <a href="/evenements">Events</a>
-    <a href="/boutique">Boutique</a>
+    <a href="/events">Events</a>
     <a href="/actualité">Actualité</a>
-    <a href="/contact" class="contact-button">Contactez-nous</a>
+    <a href="/boutique">Boutique</a>
   </div>
   <div>
     <Social/>
@@ -172,18 +164,4 @@ import Social from './Social.astro';
     const menu = document.getElementById('navLinks');
     menu.classList.toggle('show');
   }
-
-  // function toggleTheme() {
-  // const body = document.body;
-  // const isLight = body.classList.toggle('light');
-  // localStorage.setItem('theme', isLight ? 'light' : 'dark');
-  // }
-
-  // Appliquer le thème sauvegardé
-  // window.addEventListener('DOMContentLoaded', () => {
-    // const savedTheme = localStorage.getItem('theme');
-    // if (savedTheme === 'light') {
-      // document.body.classList.add('light');
-    // }
-  // });
 </script>

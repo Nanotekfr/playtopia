@@ -4,6 +4,8 @@ export interface Event {
   id: string;
   title: string;
   date: string;
+  description: string;
+  places: string;
   type: string;
 }
 
@@ -20,6 +22,8 @@ export default function EventTable({ events, onEdit, onDelete }: Props) {
         <tr>
           <th>Nom</th>
           <th>Date</th>
+          <th>Description</th>
+          <th>Places</th>
           <th>Type</th>
           <th>Actions</th>
         </tr>
@@ -29,6 +33,8 @@ export default function EventTable({ events, onEdit, onDelete }: Props) {
           <tr key={event.id}>
             <td>{event.title}</td>
             <td>{event.date}</td>
+            <td>{event.description}</td>
+            <td>{event.places}</td>
             <td>{event.type}</td>
             <td>
               <button class="btn-edit" onClick={() => onEdit(event.id)}>✏️</button>

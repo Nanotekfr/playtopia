@@ -1,27 +1,36 @@
 import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
-type GameEvent = {
+type Event = {
   id: string;
+  image: string;
   title: string;
   date: string;
+  description: string,
+  places: string;
   type: string;
 };
 
 type Props = {
-  onSubmit: (event: GameEvent) => void;
+  onSubmit: (event: Event) => void;
   onCancel: () => void;
-  initialData?: GameEvent;
+  initialData?: Event;
 };
 
 export default function EventForm({ onSubmit, onCancel, initialData }: Props) {
+  const [image, setImage] = useState(initialData?.image || 'https://www.powertrafic.fr/wp-content/uploads/2023/04/image-ia-exemple-768x384.png');
   const [title, setTitle] = useState(initialData?.title || '');
   const [date, setDate] = useState(initialData?.date || '');
+  const [description, setDescription] = useState(initialData?.description || '');
+  const [places, setPlaces] = useState(initialData?.places || '');
   const [type, setType] = useState(initialData?.type || '');
 
   useEffect(() => {
+    setTitle(initialData?.image || '');
     setTitle(initialData?.title || '');
     setDate(initialData?.date || '');
+    setDescription(initialData?.description || '');
+    setType(initialData?.places || '');
     setType(initialData?.type || '');
   }, [initialData]);
 
@@ -29,15 +38,18 @@ export default function EventForm({ onSubmit, onCancel, initialData }: Props) {
     e.preventDefault();
 
     if (!title || !date || !type) {
-      alert("Remplis tous les champs, Dylan !");
+      alert("Remplis tous les champs!");
       return;
     }
 
-    const newEvent: GameEvent = {
+    const newEvent: Event = {
       id: initialData?.id || crypto.randomUUID(),
+      image,
       title,
       date,
-      type,
+      description,
+      places,
+      type
     };
 
     onSubmit(newEvent);
@@ -46,6 +58,11 @@ export default function EventForm({ onSubmit, onCancel, initialData }: Props) {
   return (
     <form onSubmit={handleSubmit} class="cyber-form">
       <label>
+        Image :
+        <input type="text" value={image} onInput={e => setImage(e.currentTarget.value)} />
+      </label>
+
+      <label>
         Nom :
         <input type="text" value={title} onInput={e => setTitle(e.currentTarget.value)} />
       </label>
@@ -53,6 +70,16 @@ export default function EventForm({ onSubmit, onCancel, initialData }: Props) {
       <label>
         Date :
         <input type="date" value={date} onInput={e => setDate(e.currentTarget.value)} />
+      </label>
+
+      <label>
+        Description :
+        <input type="text" value={description} onInput={e => setDescription(e.currentTarget.value)} />
+      </label>
+
+      <label>
+        Places :
+        <input type="number" value={places} onInput={e => setPlaces(e.currentTarget.value)} />
       </label>
 
       <label>

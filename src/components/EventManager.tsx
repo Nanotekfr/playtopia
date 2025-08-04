@@ -4,8 +4,11 @@ import EventForm from './EventForm';
 
 type Event = {
   id: string;
+  image: string;
   title: string;
   date: string;
+  description: string;
+  places: string;
   type: string;
 };
 
@@ -65,13 +68,6 @@ export default function EventManager({ initialEvents }: Props) {
     <div>
       <h2>🧩 Événements enregistrés</h2>
 
-      <button onClick={() => {
-        setEditing(null);
-        setIsFormVisible(true);
-      }}>
-        ➕ Ajouter un événement
-      </button>
-
       {isFormVisible && (
         <EventForm
           onSubmit={editing ? handleUpdate : handleCreate}
@@ -85,6 +81,8 @@ export default function EventManager({ initialEvents }: Props) {
           <tr>
             <th>Nom</th>
             <th>Date</th>
+            <th>Description</th>
+            <th>Nombre de places restantes</th>
             <th>Type</th>
             <th>Actions</th>
           </tr>
@@ -94,6 +92,8 @@ export default function EventManager({ initialEvents }: Props) {
             <tr key={event.id}>
               <td>{event.title}</td>
               <td>{event.date}</td>
+              <td>{event.description}</td>
+              <td>{event.places}</td>
               <td>{event.type}</td>
               <td>
                 <button onClick={() => {
@@ -106,6 +106,12 @@ export default function EventManager({ initialEvents }: Props) {
           ))}
         </tbody>
       </table>
+      <button onClick={() => {
+        setEditing(null);
+        setIsFormVisible(true);
+      }}>
+        ➕ Ajouter un événement
+      </button>
 
       <style>{`
         .event-table {
@@ -138,6 +144,7 @@ export default function EventManager({ initialEvents }: Props) {
           border-radius: 6px;
           font-weight: bold;
           cursor: pointer;
+          margin: 1rem
         }
 
         button:hover {

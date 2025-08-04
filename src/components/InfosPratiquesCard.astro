@@ -56,6 +56,10 @@ const itineraireUrl = `https://www.google.com/maps/dir/?api=1&destination=${adre
     color: #ccc;
   }
 
+  .contact a {
+    color: #FFAE42;
+  }
+
   .map-container {
     width: 100%;
     height: 300px;
@@ -101,6 +105,7 @@ const itineraireUrl = `https://www.google.com/maps/dir/?api=1&destination=${adre
 <div class="card">
   <div class="card-header">Infos pratiques</div>
   <div class="card-body">
+    <h2>Horaires</h2>
     <div class="horaires">
       {horaires.map((item: { jour: unknown; heures: unknown; }) => (
         <>
@@ -109,7 +114,17 @@ const itineraireUrl = `https://www.google.com/maps/dir/?api=1&destination=${adre
         </>
       ))}
     </div>
+    <h2>Contact</h2>
+    <div class="contact">
+      <div>Mail : <a href="mailto:couillet.dylan@gmail.com">couillet.dylan@gmail.com</a></div>
+      <div>Téléphone : 0626041802</div>
+    </div>
+  </div>
+</div>
 
+<div class="card">
+  <div class="card-header">Comment venir</div>
+  <div class="card-body">
     <div class="map-container">
       <iframe
         src={mapUrl}
@@ -118,11 +133,10 @@ const itineraireUrl = `https://www.google.com/maps/dir/?api=1&destination=${adre
         referrerpolicy="no-referrer-when-downgrade">
       </iframe>
     </div>
-
     <div class="adresse">{adresse}</div>
-
-    <a class="cta-button" href={itineraireUrl} target="_blank" rel="noopener noreferrer">
-      Itinéraire
-    </a>
+      <a class="cta-button" href={itineraireUrl} target="_blank" rel="noopener noreferrer">
+        Itinéraire
+      </a>
+    </div>
   </div>
 </div>

@@ -4,11 +4,32 @@ import EventCard from '../components/EventCard.astro';
 
 import events from '../data/events.json';
 ---
+<style>
+  h1 {
+    display: flex;
+    justify-content: center;
+  }
+
+  .events-container {
+    display: flex;
+    flex-wrap: wrap; /* Pour que ça passe sur plusieurs lignes si besoin */
+    gap: 1rem; /* Espace entre les cartes */
+    justify-content: center; /* Centrage horizontal */
+    margin-bottom;: 500px
+  }
+
+  /* Optionnel : si tu veux que chaque carte ait une taille fixe */
+  .events-container > * {
+    flex: 0 1 300px; /* Largeur max d'une carte */
+  }
+</style>
 
 <BaseLayout title="Événements à venir | Runatika">
   <h1>📅 Événements à venir</h1>
 
-  {events.map(event => (
-    <EventCard {...event} />
-  ))}
+  <div class="events-container">
+    {events.map(event => (
+      <EventCard {...event} />
+    ))}
+  </div>
 </BaseLayout>
