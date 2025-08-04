@@ -1,16 +1,13 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
-import node from '@astrojs/node';
-
 // https://astro.build/config
+import { defineConfig } from 'astro/config';
+import preact from '@astrojs/preact';
+
 export default defineConfig({
-  integrations: [react()],
-  adapter: node({
-    mode: 'standalone'
-  }),
-  redirects: {
-    "/old-page": "/new-page",
-    "/blog": "https://example.com/blog"
-  }
+  integrations: [preact()],
+  vite: {
+    envPrefix: 'API_',
+    optimizeDeps: {
+      include: ['preact', 'preact/hooks'],
+    },
+  },
 });

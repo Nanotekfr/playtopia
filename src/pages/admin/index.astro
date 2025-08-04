@@ -1,0 +1,16 @@
+---
+// src/pages/admin/index.astro
+import EventManager from '../../components/EventManager.tsx';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import fs from 'fs';
+import path from 'path';
+
+const eventsPath = path.resolve('./src/data/events.json');
+const raw = fs.readFileSync(eventsPath, 'utf-8');
+const events = JSON.parse(raw);
+---
+
+<BaseLayout title="Admin événements">
+  <h1>🔧 Gestion des événements</h1>
+  <EventManager initialEvents={events} client:only="preact" />
+</BaseLayout>
