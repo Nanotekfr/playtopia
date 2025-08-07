@@ -1,24 +1,25 @@
 import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
-type Event = {
+// ✅ Renommé pour éviter conflit avec le type natif "Event"
+type EventData = {
   id: string;
   image: string;
   title: string;
   date: string;
-  description: string,
+  description: string;
   places: string;
   type: string;
 };
 
 type Props = {
-  onSubmit: (event: Event) => void;
+  onSubmit: (event: EventData) => void;
   onCancel: () => void;
-  initialData?: Event;
+  initialData?: EventData;
 };
 
 export default function EventForm({ onSubmit, onCancel, initialData }: Props) {
-  const [image, setImage] = useState(initialData?.image || 'https://www.powertrafic.fr/wp-content/uploads/2023/04/image-ia-exemple-768x384.png');
+  const [image, setImage] = useState(initialData?.image || '');
   const [title, setTitle] = useState(initialData?.title || '');
   const [date, setDate] = useState(initialData?.date || '');
   const [description, setDescription] = useState(initialData?.description || '');
@@ -26,23 +27,21 @@ export default function EventForm({ onSubmit, onCancel, initialData }: Props) {
   const [type, setType] = useState(initialData?.type || '');
 
   useEffect(() => {
-    setTitle(initialData?.image || '');
-    setTitle(initialData?.title || '');
-    setDate(initialData?.date || '');
-    setDescription(initialData?.description || '');
-    setType(initialData?.places || '');
-    setType(initialData?.type || '');
+    if (initialData) {
+      setImage(initialData.image);
+      setTitle(initialData.title);
+      setDate(initialData.date);
+      setDescription(initialData.description);
+      setPlaces(initialData.places);
+      setType(initialData.type);
+    }
   }, [initialData]);
 
-  const handleSubmit = (e: preact.JSX.TargetedEvent<HTMLFormElement, SubmitEvent>) => {
+  // ✅ Correction ici : on utilise le bon type DOM pour le submit
+  const handleSubmit = (e: h.JSX.TargetedSubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!title || !date || !type) {
-      alert("Remplis tous les champs!");
-      return;
-    }
-
-    const newEvent: Event = {
+    const newEvent: EventData = {
       id: initialData?.id || crypto.randomUUID(),
       image,
       title,
