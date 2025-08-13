@@ -1,5 +1,4 @@
 ---
-// src/components/ActuCard.astro
 const { title, link, pubDate, description } = Astro.props;
 
 const date = pubDate

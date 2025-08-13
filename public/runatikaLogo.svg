@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300" role="img" aria-label="Logo Runatika rune Raidho centré visuellement">
+  <!-- Cercle extérieur -->
+  <circle cx="150" cy="150" r="130" fill="none" stroke="#5A326E" stroke-width="8"></circle>
+
+  <!-- Cercle intérieur -->
+  <circle cx="150" cy="150" r="90" fill="none" stroke="#8C5B9E" stroke-width="4"></circle>
+
+  <!-- Rune Raidho stylisée en traits géométriques centrée visuellement -->
+  <g stroke="#FFAE42" stroke-width="10" fill="none" stroke-linejoin="round" stroke-linecap="round" transform="translate(-15,0)">
+    <!-- Barre verticale -->
+    <line x1="150" y1="100" x2="150" y2="210"></line>
+    <!-- Branche oblique supérieure -->
+    <line x1="150" y1="100" x2="195" y2="140"></line>
+    <!-- Branche oblique inférieure -->
+    <line x1="150" y1="155" x2="200" y2="195"></line>
+    <!-- Fermeture haute ajustée -->
+    <line x1="195" y1="140" x2="150" y2="150"></line>
+  </g>
+</svg>

@@ -1,7 +1,8 @@
 import { h } from 'preact';
 
-export interface Event {
+export interface EventData {
   id: string;
+  image: string;
   title: string;
   date: string;
   description: string;
@@ -10,7 +11,7 @@ export interface Event {
 }
 
 type Props = {
-  events: Event[];
+  events: EventData[];
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
 }

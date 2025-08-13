@@ -36,7 +36,6 @@ export default function EventForm({ onSubmit, onCancel, initialData }: Props) {
     }
   }, [initialData]);
 
-  // ✅ Correction ici : on utilise le bon type DOM pour le submit
   const handleSubmit = (e: h.JSX.TargetedSubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 

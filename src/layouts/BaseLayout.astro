@@ -12,7 +12,7 @@ const { pageTitle = "Runatika - Bar ludique" } = Astro.props;
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href="/runatikaLogo.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{pageTitle}</title>
     <style>
@@ -21,7 +21,7 @@ const { pageTitle = "Runatika - Bar ludique" } = Astro.props;
 	<body>
     <Header/>
 		<slot />
-    <Footer/>
+    <Footer/ client:visible>
     <script>
     import "../scripts/menu.js";
   </script>

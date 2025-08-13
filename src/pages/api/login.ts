@@ -7,7 +7,7 @@ import type { APIRoute } from "astro";
 export const prerender = false;
 
 // stockage temporaire des sessions
-const sessions = new Map<
+export const sessions = new Map<
 	string,
 	{ username: string; role: string; expiresAt: number }
 >();

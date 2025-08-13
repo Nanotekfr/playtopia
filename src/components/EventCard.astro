@@ -1,9 +1,34 @@
-<!-- affichage public event -->
 ---
-const { title,image, description, date, places, type } = Astro.props;
-const d = new Date(date).toLocaleString('fr-FR', {
-  weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit'
-});
+const { title, image, description, date, places, type } = Astro.props as {
+  title: string;
+  image: string;
+  description: string;
+  date: string | Date;
+  places: number;
+  type: string;
+};
+
+const options: Intl.DateTimeFormatOptions = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+};
+
+function formatDateSafe(input: string | Date, locale = "fr-FR") {
+  const parsedDate = input instanceof Date ? input : new Date(input);
+
+  // Vérifie si la date est valide
+  if (isNaN(parsedDate.getTime())) {
+    return "Date invalide";
+  }
+
+  return parsedDate.toLocaleString(locale, options);
+}
+
+const d = formatDateSafe(date);
 ---
 
 <style>

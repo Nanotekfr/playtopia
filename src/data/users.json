@@ -2,7 +2,8 @@
 	{
 		"id": "u1",
 		"email": "admin@playtopia.com",
-		"passwordHash": "$2b$10$7QFJ7o1JgVmOqZP.Er4PeOXMqV0kF.TX3lo1IRi05cZoHx9p6SlFu",
+		"username": "masterofrunes",
+		"passwordHash": "0123456789",
 		"role": "admin"
 	},
 	{
@@ -13,8 +14,8 @@
 	},
 	{
 		"id": "u3",
-		"email": "user2@example.com",
-		"passwordHash": "$2b$10$yg9mRkjWWDqWNP2IG9lLCuY8q5RGfHHoPVevl0IvA6aXFD6zyySsy",
-		"role": "user"
+		"email": "test@test.fr",
+		"passwordHash": "123",
+		"role": "admin"
 	}
 ]

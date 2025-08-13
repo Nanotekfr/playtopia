@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 import EventForm from './EventForm';
 
-type Event = {
+type EventData = {
   id: string;
   image: string;
   title: string;
@@ -13,45 +13,45 @@ type Event = {
 };
 
 type Props = {
-  initialEvents: Event[];
+  initialEvents: EventData[];
 };
 
 export default function EventManager({ initialEvents }: Props) {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [editing, setEditing] = useState<Event | null>(null);
+  const [events, setEventData] = useState<EventData[]>([]);
+  const [editing, setEditing] = useState<EventData | null>(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
   // Charger les événements au démarrage
   useEffect(() => {
     if (initialEvents && initialEvents.length > 0) {
-      setEvents(initialEvents);
+      setEventData(initialEvents);
     } else {
       fetch('/api/events')
         .then(res => res.json())
-        .then(setEvents)
+        .then(setEventData)
         .catch(err => console.error("Erreur chargement events:", err));
     }
   }, [initialEvents]);
 
-  const handleCreate = async (newEvent: Event) => {
+  const handleCreate = async (newEvent: EventData) => {
     const res = await fetch('/api/events', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newEvent)
     });
     const saved = await res.json();
-    setEvents(prev => [...prev, saved]);
+    setEventData(prev => [...prev, saved]);
     setIsFormVisible(false);
   };
 
-  const handleUpdate = async (updated: Event) => {
+  const handleUpdate = async (updated: EventData) => {
     const res = await fetch(`/api/events/${updated.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updated)
     });
     if (res.ok) {
-      setEvents(prev => prev.map(e => e.id === updated.id ? updated : e));
+      setEventData(prev => prev.map(e => e.id === updated.id ? updated : e));
       setEditing(null);
       setIsFormVisible(false);
     }
@@ -60,7 +60,7 @@ export default function EventManager({ initialEvents }: Props) {
   const handleDelete = async (id: string) => {
     const res = await fetch(`/api/events/${id}`, { method: 'DELETE' });
     if (res.ok) {
-      setEvents(prev => prev.filter(e => e.id !== id));
+      setEventData(prev => prev.filter(e => e.id !== id));
     }
   };
 
