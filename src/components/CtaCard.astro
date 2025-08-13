@@ -59,7 +59,7 @@ const { title, description, image, ctaText, ctaLink } = Astro.props;
 </style>
 
 <article class="card" role="region" aria-label={title}>
-  {image && <img src={image} alt={`image de ${title}`} loading="lazy" />}
+  {image && <img src={image} alt={`apparence du ${title}`} loading="lazy" />}
   <div class="content">
     <h2>{title}</h2>
     <p>{description}</p>

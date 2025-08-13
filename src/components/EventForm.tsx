@@ -1,7 +1,6 @@
 import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
-// ✅ Renommé pour éviter conflit avec le type natif "Event"
 type EventData = {
   id: string;
   image: string;

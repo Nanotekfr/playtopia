@@ -1,7 +1,8 @@
 ---
-import Card from '../components/Card.astro';
-import InfosPratiquesCard from '../components/InfosPratiquesCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/CtaCard.astro';
+import InfosPratiquesCard from '../components/InfosPratiquesCard.astro';
+import Greeting from '../components/Greeting.jsx';
 ---
 <style>
   .cards, .localisation{
@@ -17,9 +18,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 </style>
 
-<BaseLayout title="Accueil | Runatika">
+<BaseLayout pageTitle="Accueil | Runatika">
   <h1>Meilleur bar a Jeux de Lille<h1>
   <h2>espace bar, salle de jeux avec événements quotidiens</h2>
+    <Greeting client:load messages={["Hej", "Hallo", "Hola", "Habari"]} />
   <div class="cards">
     <Card
         title="Bar"
@@ -43,7 +45,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         ctaLink="/src/assets/Atmos Arena - Carte du bar (web).pdf"
       />
     </div>
-    <h2>Où nous trouver et horraire</h2>
+    <h2>Où nous trouver et horraires</h2>
     <div class="localisation">
       <InfosPratiquesCard
       mapUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2533.726586119802!2d3.0963136!3d50.6313347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2d59c32e90b0f%3A0xf09d27554e0e62e0!2sFives%20Cail!5e0!3m2!1sfr!2sfr!4v1694468462335!5m2!1sfr!2sfr"

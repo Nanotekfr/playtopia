@@ -9,5 +9,11 @@ export default defineConfig({
     optimizeDeps: {
       include: ['preact', 'preact/hooks'],
     },
-  },
+    middleware: [
+      {
+        path: '/admin',
+        handler: './src/middleware/admin-only.ts',
+      },
+    ],
+  }
 });

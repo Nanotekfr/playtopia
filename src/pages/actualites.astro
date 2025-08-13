@@ -1,0 +1,167 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const rssUrl = 'https://www.francenetinfos.com/category/loisirs-2/jeux-de-societes/feed/';
+const proxyUrl = 'https://api.allorigins.win/get?url=';
+
+let items: string | any[] = [];
+
+try {
+  const res = await fetch(proxyUrl + encodeURIComponent(rssUrl));
+  if (!res.ok) throw new Error(`Erreur HTTP ${res.status}`);
+
+  const data = await res.json();
+  const parser = new DOMParser();
+  const xmlDoc = parser.parseFromString(data.contents, "application/xml");
+
+  if (xmlDoc.querySelector('parsererror')) throw new Error('Erreur parsing XML');
+
+  items = [...xmlDoc.querySelectorAll('item')].map(item => ({
+    title: item.querySelector('title')?.textContent || 'Sans titre',
+    link: item.querySelector('link')?.textContent || '#',
+    pubDate: item.querySelector('pubDate')?.textContent || '',
+    description: (item.querySelector('description')?.textContent || '').replace(/<[^>]+>/g, '').slice(0, 200) + '…',
+  }));
+
+} catch (err) {
+  console.error('Erreur de chargement RSS:', err);
+}
+
+const itemsJson = JSON.stringify(items);
+---
+
+<BaseLayout pageTitle="Actualités | Runatika">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: #1a0f30;
+      color: #f0e6ff;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      color: #ffae42;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2.2rem;
+      letter-spacing: 0.05em;
+    }
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #2c1f54;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 0 20px rgba(255, 174, 66, 0.4);
+    }
+    .news-card {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #462e87;
+    }
+    .news-card a {
+      color: #ffae42;
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-decoration: none;
+    }
+    .news-card a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+    .news-card .date {
+      font-size: 0.85rem;
+      color: #c0a060;
+      margin-top: 0.2rem;
+    }
+    .news-card .description {
+      margin-top: 0.6rem;
+      font-size: 0.95rem;
+      color: #d8c6ff;
+      line-height: 1.4;
+    }
+    .no-articles {
+      text-align: center;
+      font-style: italic;
+      color: #ff6f42;
+      padding: 2rem 0;
+    }
+  </style>
+
+  <main>
+    <h1>Actualités du monde ludique</h1>
+
+    <div id="news-container"></div>
+
+    {items.length === 0 && (
+      <p class="no-articles">Aucune actualité disponible pour le moment.</p>
+    )}
+  </main>
+
+  <script type="module">
+    const items = JSON.parse(`${itemsJson}`);
+    const container = document.getElementById('news-container');
+    const batchSize = 5;
+    let displayedCount = 0;
+    let isLoading = false;
+
+    function formatDate(pubDate) {
+      if (!pubDate) return '';
+      const date = new Date(pubDate);
+      return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    function renderItems() {
+      if (isLoading) return;
+      isLoading = true;
+
+      const nextBatch = items.slice(displayedCount, displayedCount + batchSize);
+      nextBatch.forEach(({ title, link, pubDate, description }) => {
+        const card = document.createElement('div');
+        card.className = 'news-card';
+
+        const a = document.createElement('a');
+        a.href = link;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = title;
+        card.appendChild(a);
+
+        if (pubDate) {
+          const dateDiv = document.createElement('div');
+          dateDiv.className = 'date';
+          dateDiv.textContent = `Publié le ${formatDate(pubDate)}`;
+          card.appendChild(dateDiv);
+        }
+
+        if (description) {
+          const descDiv = document.createElement('div');
+          descDiv.className = 'description';
+          descDiv.textContent = description;
+          card.appendChild(descDiv);
+        }
+
+        container.appendChild(card);
+      });
+
+      displayedCount += batchSize;
+      isLoading = false;
+    }
+
+    function handleScroll() {
+      if (isLoading) return;
+
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const threshold = document.body.offsetHeight - 300;
+
+      if (scrollPosition >= threshold && displayedCount < items.length) {
+        renderItems();
+      }
+    }
+
+    if (items.length > 0) {
+      renderItems();
+      window.addEventListener('scroll', handleScroll);
+    }
+  </script>
+</BaseLayout>

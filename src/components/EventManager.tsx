@@ -21,7 +21,7 @@ export default function EventManager({ initialEvents }: Props) {
   const [editing, setEditing] = useState<Event | null>(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
-  // 🧠 Charger les événements au démarrage
+  // Charger les événements au démarrage
   useEffect(() => {
     if (initialEvents && initialEvents.length > 0) {
       setEvents(initialEvents);

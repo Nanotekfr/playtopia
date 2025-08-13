@@ -1,73 +1,56 @@
 import type { APIRoute } from "astro";
-import fs from "fs/promises";
+import fs from "fs";
 import path from "path";
-
-export const prerender = false;
 
 const eventsPath = path.resolve("./src/data/events.json");
 
-async function readEvents() {
-	const raw = await fs.readFile(eventsPath, "utf-8");
+export const prerender = false;
+
+// Utilitaire pour lire et écrire dans le fichier
+function readEvents() {
+	const raw = fs.readFileSync(eventsPath, "utf-8");
 	return JSON.parse(raw);
 }
 
-async function writeEvents(events: any[]) {
-	await fs.writeFile(eventsPath, JSON.stringify(events, null, 2), "utf-8");
+function writeEvents(events: any) {
+	fs.writeFileSync(eventsPath, JSON.stringify(events, null, 2));
 }
 
-export const GET: APIRoute = async ({ params }) => {
-	try {
-		const events = await readEvents();
-		const event = events.find((e: any) => e.id === params.id);
+// ✅ Mise à jour d’un événement
+export const PUT: APIRoute = async ({ request, params }) => {
+	const id = params.id;
+	if (!id) return new Response("Missing ID", { status: 400 });
 
-		if (!event) {
-			return new Response("Événement non trouvé", { status: 404 });
-		}
+	const data = await request.json();
+	const events = readEvents();
 
-		return new Response(JSON.stringify(event), {
-			status: 200,
-			headers: { "Content-Type": "application/json" },
-		});
-	} catch {
-		return new Response("Erreur lecture event", { status: 500 });
+	const index = events.findIndex((e: any) => e.id === id);
+	if (index === -1) {
+		return new Response("Event not found", { status: 404 });
 	}
+
+	events[index] = { ...events[index], ...data, id }; // merge sans perdre l'id
+	writeEvents(events);
+
+	return new Response(JSON.stringify(events[index]), {
+		status: 200,
+		headers: { "Content-Type": "application/json" },
+	});
 };
 
-export const PUT: APIRoute = async ({ params, request }) => {
-	try {
-		const updatedEvent = await request.json();
-		const events = await readEvents();
-		const index = events.findIndex((e: any) => e.id === params.id);
-
-		if (index === -1) {
-			return new Response("Événement non trouvé", { status: 404 });
-		}
-
-		events[index] = updatedEvent;
-		await writeEvents(events);
-
-		return new Response(JSON.stringify(updatedEvent), {
-			status: 200,
-			headers: { "Content-Type": "application/json" },
-		});
-	} catch {
-		return new Response("Erreur mise à jour event", { status: 500 });
-	}
-};
-
+// ❌ Suppression d’un événement
 export const DELETE: APIRoute = async ({ params }) => {
-	try {
-		const events = await readEvents();
-		const filtered = events.filter((e: any) => e.id !== params.id);
+	const id = params.id;
+	if (!id) return new Response("Missing ID", { status: 400 });
 
-		if (filtered.length === events.length) {
-			return new Response("Événement non trouvé", { status: 404 });
-		}
+	const events = readEvents();
+	const updated = events.filter((e: any) => e.id !== id);
 
-		await writeEvents(filtered);
-
-		return new Response(null, { status: 204 });
-	} catch {
-		return new Response("Erreur suppression event", { status: 500 });
+	if (updated.length === events.length) {
+		return new Response("Event not found", { status: 404 });
 	}
+
+	writeEvents(updated);
+
+	return new Response(null, { status: 204 });
 };

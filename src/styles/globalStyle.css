@@ -1,0 +1,52 @@
+/* dark mode */
+:root {
+  --color-bg: #1a0f1f;
+  --color-text: #eee;
+  --color-accent: #FFAE42;
+  --color-accent-dark: #ffc76a;
+  --color-border: #8C5B9E;
+  --color-header: #5A326E;
+}
+
+/* light mode */
+:root {
+  --bg-nav: rgb(255, 255, 254);
+  --text-color: rgb(232, 25, 6);
+  --text-color-bis: rgb(60, 60, 60);
+  --accent-color: rgb(90, 50, 110);
+  --button-color: rgb(255, 174, 66);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Orbitron', sans-serif;
+  min-height: 100vh;
+}
+
+.hamburger {
+  padding-right: 20px;
+  cursor: pointer;
+}
+
+.hamburger .line {
+  display: block;
+  width: 40px;
+  height: 5px;
+  margin-bottom: 10px;
+  background-color: #ff9776;
+}
+
+.hamburger{
+  display: none;
+}

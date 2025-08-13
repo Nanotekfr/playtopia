@@ -1,9 +1,9 @@
 ---
+import Header from '../components/Header.astro';
 import Footer from "../components/Footer.astro";
-import Navbar from "../components/Navbar.astro";
-const { title = "Runatika - Bar ludique", children } = Astro.props;
+import '../styles/globalStyle.css';
+const { pageTitle = "Runatika - Bar ludique" } = Astro.props;
 ---
-
 <!doctype html>
 <html lang="fr">
 	<head>
@@ -14,54 +14,16 @@ const { title = "Runatika - Bar ludique", children } = Astro.props;
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-
-    
-    
+		<title>{pageTitle}</title>
     <style>
-      /* dark mode */
-      :root {
-        --color-bg: #1a0f1f;
-        --color-text: #eee;
-        --color-accent: #FFAE42;
-        --color-accent-dark: #ffc76a;
-        --color-border: #8C5B9E;
-        --color-header: #5A326E;
-      }
-
-      /* light mode */
-      :root {
-        --bg-nav: rgb(255, 255, 254);
-        --text-color: rgb(232, 25, 6);
-        --text-color-bis: rgb(60, 60, 60);
-        --accent-color: rgb(90, 50, 110);
-        --button-color: rgb(255, 174, 66);
-      }
-
-      html, body {
-        height: 100%;
-        margin: 0;
-        background-color: var(--color-bg);
-        color: var(--color-text);
-        display: flex;
-        flex-direction: column;
-      }
-
-      body {
-        margin: 0;
-        background-color: var(--color-bg);
-        color: var(--color-text);
-        font-family: 'Orbitron', sans-serif;
-        min-height: 100vh;
-      }
-
     </style>
   </head>
 	<body>
-    <Navbar/>
-    <main>
-      {children}
-    </main>
+    <Header/>
 		<slot />
+    <Footer/>
+    <script>
+    import "../scripts/menu.js";
+  </script>
 	</body>
 </html>
