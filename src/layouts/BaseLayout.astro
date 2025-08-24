@@ -21,9 +21,8 @@ const { pageTitle = "Runatika - Bar ludique" } = Astro.props;
 	<body>
     <Header/>
 		<slot />
-    <Footer/ client:visible>
+    <Footer/>
     <script>
-    import "../scripts/menu.js";
   </script>
 	</body>
 </html>

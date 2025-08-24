@@ -4,148 +4,168 @@ import Social from './Social.astro';
 ---
 
 <style>
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 200px;
+  background-color: var(--bg-nav);
+  color: var(--text-color);
+  border-bottom: solid 5px orange;
+  transition: background-color 0.3s, color 0.3s;
+}
 
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.burger,
+.toggle-theme {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  display: none; /* masqué par défaut */
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.nav-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 14px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+/* Underline animé */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: var(--accent-color);
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-links a.active::after,
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.contact-button {
+  color: white;
+  border: none;
+  text-transform: uppercase;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* ========== Responsive ========== */
+
+/* Smartphones */
+@media screen and (max-width: 599px) {
   nav {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 200px;
-    background-color: var(--bg-nav);
-    color: var(--text-color);
-    border-bottom: 1px solid #222;
-    transition: background-color 0.3s, color 0.3s;
+    padding: 10px 20px;
   }
 
   .logo {
-    color: var(--accent-color);
-    font-weight: bold;
-    font-size: 20px;
-    letter-spacing: 2px;
-    text-transform: ;
-    text-decoration: none;
-  }
-
-  .logo span {
-    display: inline-block;
-  }
-
-  .controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .burger,
-  .toggle-theme {
-    font-size: 24px;
-    background: none;
-    border: none;
-    color: var(--text-color);
-    cursor: pointer;
+    font-size: 10px;
   }
 
   .nav-links {
-    display: flex;
-    gap: 30px;
-    transition: max-height 0.4s ease, opacity 0.3s ease;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 75%;
+    max-width: 300px;
+    background: var(--bg-color);
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 20px;
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .nav-links.show {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .nav-links a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 14px;
-    text-transform: uppercase;
-    position: relative;
+    font-size: 18px;
+    margin: 12px 0;
   }
 
-    /* Underline animé */
-    .nav-links a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 0%;
-    height: 2px;
-    background: var(--accent-color);
-    transition: width 0.3s ease-in-out;
+  .burger {
+    display: block;
   }
+}
 
-  .nav-links a.active::after,
-  .nav-links a:hover::after {
-    width: 100%;
+/* Tablettes (portrait & paysage) */
+@media screen and (min-width: 600px) and (max-width: 1199px) {
+  nav {
+    padding: 10px 50px;
   }
-
-  .contact-button {
-    color: white;
-    border: none;
-    text-transform: uppercase;
-    font-size: 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
+  .burger {
+    display: none;
   }
+}
 
-   /* ========== Responsive ========== */
-  @media (max-width: 768px) {
-    .nav-links {
-      position: fixed;
-      top: 0;
-      right: 0;
-      height: 100vh;
-      width: 75%;
-      max-width: 300px;
-      background: var(--bg-color);
-      flex-direction: column;
-      justify-content: center;
-      padding: 40px 20px;
-      transform: translateX(100%);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 999;
-    }
-
-    .nav-links.show {
-      transform: translateX(0);
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .nav-links a {
-      font-size: 18px;
-      margin: 12px 0;
-    }
-
-    .burger {
-      display: block;
-    }
+/* Laptops / desktops standards */
+@media screen and (min-width: 1200px) and (max-width: 1599px) {
+  nav {
+    padding: 10px 100px;
   }
-
-  @media (min-width: 769px) {
-    .burger {
-      display: none;
-    }
+  .burger {
+    display: none;
   }
+}
 
-  /* Desktop only: cacher le burger, mais garder l’icône thème */
-  @media (min-width: 769px) {
-    .burger {
-      display: none;
-    }
+/* Très grands écrans (1600px et +) */
+@media screen and (min-width: 1600px) {
+  nav {
+    padding: 10px 300px;
   }
+  .burger {
+    display: none;
+  }
+}
 </style>
 
 <nav>
-    <a href="/" class="logo" aria-label="Accueil Runatika">
+  <a href="/" class="logo" aria-label="Accueil Runatika">
     <span class="logo-span" role="img" aria-label="Logo Runatika">
       <RunatikaLogo width={30} height={30} />unetika
     </span>
   </a>
 
-  <div class="controls">
-  </div>
+  <button class="burger" onclick="toggleMenu()" aria-label="Menu">&#9776;</button>
 
   <div class="nav-links" id="navLinks">
     <a href="/admin">Bypass</a>
@@ -155,6 +175,7 @@ import Social from './Social.astro';
     <a href="/about">A propos</a>
     <a href="/tags/">Étiquettes</a>
   </div>
+
   <div>
     <Social/>
   </div>

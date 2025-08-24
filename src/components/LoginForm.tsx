@@ -1,59 +1,42 @@
-import { h } from 'preact';
-import { useState, useEffect } from 'preact/hooks';
+import { h } from "preact";
+import { useState } from "preact/hooks";
 
 export default function LoginForm() {
-  const [errorMessage, setErrorMessage] = useState('');
-  const [infoMessage, setInfoMessage] = useState<string | null>(null);
+  const [usernameOrEmail, setUsernameOrEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const info = params.get('info');
-    if (info) setInfoMessage(info);
-  }, []);
-
-  async function handleSubmit(e: Event) {
+  const handleSubmit = async (e: Event) => {
     e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const email = (form.email as HTMLInputElement).value;
-    const password = (form.password as HTMLInputElement).value;
+    if (!usernameOrEmail || !password) {
+      setMessage("Veuillez remplir tous les champs");
+      return;
+    }
 
     try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ usernameOrEmail, password }),
       });
-
-      if (!res.ok) {
-        setErrorMessage('Identifiants incorrects');
-        form.reset();
-        return;
-      }
-
       const data = await res.json();
-      document.cookie = `sessionId=${data.sessionId}; path=/; max-age=3600`;
 
-      if (data.role === 'admin') {
-        window.location.href = '/admin';
+      if (res.ok && data.role === "admin") {
+        window.location.href = "/admin"; // redirection côté client
       } else {
-        window.location.href = '/';
+        setMessage(data.error || "Accès refusé");
       }
-    } catch {
-      setErrorMessage('Erreur lors de la connexion');
+    } catch (err) {
+      setMessage("Erreur serveur");
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
-      {infoMessage && (
-        <p style={{ color: 'green', marginBottom: '1rem', fontWeight: 'bold' }}>
-          {infoMessage}
-        </p>
-      )}
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Mot de passe" required />
-      <button type="submit">Se connecter</button>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      <input type="text" value={usernameOrEmail} onInput={e => setUsernameOrEmail(e.currentTarget.value)} placeholder="Email ou username" required />
+      <input type="password" value={password} onInput={e => setPassword(e.currentTarget.value)} placeholder="Mot de passe" required />
+      <button type="submit">Connexion</button>
+      {message && <p>{message}</p>}
     </form>
   );
 }

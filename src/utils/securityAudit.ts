@@ -8,6 +8,13 @@ export type Session = {
 	expiresAt: number;
 };
 
+export type User = {
+	username: string;
+	email: string;
+	name?: string;
+	role: string;
+};
+
 export type Cookies = {
 	get(name: string): { value?: string } | undefined;
 };
@@ -17,9 +24,11 @@ export type AuditResult = {
 	status: number;
 	message?: string;
 	session?: Session;
+	user?: User;
 };
 
 const sessionsFile = path.resolve("src/data/sessions.json");
+const usersFile = path.resolve("src/data/users.json");
 
 function loadSessions(): Session[] {
 	try {
@@ -35,8 +44,19 @@ function saveSessions(sessions: Session[]) {
 	fs.writeFileSync(sessionsFile, JSON.stringify(sessions, null, 2), "utf-8");
 }
 
+function loadUsers(): User[] {
+	try {
+		if (!fs.existsSync(usersFile)) return [];
+		const data = fs.readFileSync(usersFile, "utf-8");
+		return JSON.parse(data);
+	} catch {
+		return [];
+	}
+}
+
 /**
- * Vérifie la session via cookie, valide la session et le rôle (optionnel).
+ * Vérifie la session via cookie, valide la session et le rôle (optionnel),
+ * et récupère les infos utilisateur depuis users.json.
  */
 export function securityAudit(
 	cookies: Cookies,
@@ -65,5 +85,8 @@ export function securityAudit(
 		return { authorized: false, status: 403, message: "Accès interdit" };
 	}
 
-	return { authorized: true, status: 200, session };
+	const users = loadUsers();
+	const user = users.find((u) => u.username === session.username);
+
+	return { authorized: true, status: 200, session, user };
 }

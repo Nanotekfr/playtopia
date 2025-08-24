@@ -1,64 +1,109 @@
+export const prerender = false;
+import type { APIRoute } from "astro";
 import fs from "fs";
 import path from "path";
-import bcrypt from "bcrypt";
-import { randomUUID } from "crypto";
-import type { APIRoute } from "astro";
+import crypto from "crypto";
 
-export const prerender = false;
+type User = {
+	username: string;
+	email: string;
+	password: string; // mot de passe en clair pour le test
+	role: string;
+};
 
-// stockage temporaire des sessions
-export const sessions = new Map<
-	string,
-	{ username: string; role: string; expiresAt: number }
->();
+type LoginSession = {
+	id: string;
+	username: string;
+	role: string;
+	expiresAt: number;
+};
 
-export const POST: APIRoute = async ({ request, cookies }) => {
+const usersFile = path.resolve("src/data/users.json");
+const sessionsFile = path.resolve("src/data/sessions.json");
+
+function loadUsers(): User[] {
+	if (!fs.existsSync(usersFile)) {
+		fs.writeFileSync(
+			usersFile,
+			JSON.stringify(
+				[
+					{
+						username: "admin",
+						email: "admin@test.com",
+						password: "admin123",
+						role: "admin",
+					},
+				],
+				null,
+				2
+			)
+		);
+	}
+	return JSON.parse(fs.readFileSync(usersFile, "utf-8"));
+}
+
+function loadSessions(): LoginSession[] {
+	if (!fs.existsSync(sessionsFile)) {
+		fs.writeFileSync(sessionsFile, "[]");
+	}
+	return JSON.parse(fs.readFileSync(sessionsFile, "utf-8"));
+}
+
+function saveSessions(sessions: LoginSession[]) {
+	fs.writeFileSync(sessionsFile, JSON.stringify(sessions, null, 2));
+}
+
+export const post: APIRoute = async ({ request, cookies }) => {
 	try {
-		const { username, password } = await request.json();
-		if (!username || !password) {
-			return new Response(JSON.stringify({ error: "Champs manquants" }), {
+		const body = await request.json().catch(() => null);
+		if (!body || !body.usernameOrEmail || !body.password) {
+			return new Response(JSON.stringify({ error: "Requête invalide" }), {
 				status: 400,
 			});
 		}
 
-		// lecture users.json
-		const usersPath = path.join(process.cwd(), "src", "data", "users.json");
-		const users = JSON.parse(fs.readFileSync(usersPath, "utf-8"));
+		const { usernameOrEmail, password } = body;
+		const users = loadUsers();
+		const user = users.find(
+			(u) =>
+				(u.username === usernameOrEmail || u.email === usernameOrEmail) &&
+				u.password === password
+		);
 
-		const user = users.find((u: any) => u.username === username);
 		if (!user) {
-			return new Response(JSON.stringify({ error: "Utilisateur inexistant" }), {
-				status: 401,
-			});
+			return new Response(
+				JSON.stringify({ error: "Identifiant ou mot de passe invalide" }),
+				{ status: 401 }
+			);
 		}
 
-		const match = await bcrypt.compare(password, user.passwordHash);
-		if (!match) {
-			return new Response(JSON.stringify({ error: "Mot de passe incorrect" }), {
-				status: 401,
-			});
-		}
+		// Crée une session
+		const sessions = loadSessions();
+		const sessionId = crypto.randomUUID();
+		const expiresAt = Date.now() + 1000 * 60 * 60 * 24; // 24h
 
-		// créer session
-		const sessionId = randomUUID();
-		sessions.set(sessionId, {
+		const session: LoginSession = {
+			id: sessionId,
 			username: user.username,
 			role: user.role,
-			expiresAt: Date.now() + 1000 * 60 * 60, // 1h
-		});
+			expiresAt,
+		};
+		sessions.push(session);
+		saveSessions(sessions);
 
-		// cookie
+		// Envoie le cookie
 		cookies.set("sessionId", sessionId, {
-			httpOnly: true,
-			sameSite: "strict",
-			secure: true,
 			path: "/",
+			httpOnly: true,
+			maxAge: 60 * 60 * 24,
 		});
 
-		return new Response(JSON.stringify({ message: "Connecté" }), {
-			status: 200,
-		});
+		return new Response(
+			JSON.stringify({ username: user.username, role: user.role }),
+			{ status: 200 }
+		);
 	} catch (err) {
+		console.error(err);
 		return new Response(JSON.stringify({ error: "Erreur serveur" }), {
 			status: 500,
 		});

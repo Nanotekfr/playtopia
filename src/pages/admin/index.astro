@@ -3,12 +3,16 @@ import EventManager from "../../components/EventManager";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { securityAudit } from "../../utils/securityAudit";
 
+export const prerender = false;
+
+// Vérifie la session et le rôle admin
 const audit = securityAudit(Astro.cookies, "admin");
+
 if (!audit.authorized) {
   return Astro.redirect("/login");
 }
 
-const user = audit.session;
+const user = audit.user; // infos utilisateur depuis users.json
 ---
 
 <BaseLayout title="Admin événements">
@@ -18,5 +22,6 @@ const user = audit.session;
   ) : (
     <p>Utilisateur non reconnu.</p>
   )}
+
   <EventManager initialEvents={Astro.props.events} client:only="preact" />
 </BaseLayout>

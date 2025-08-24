@@ -1,8 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LoginForm from '../components/LoginForm.tsx';
+import RegisterForm from '../components/RegisterForm.tsx';
 ---
 
 <BaseLayout title="Connexion">
+  <h1>Inscription</h1>
+  <RegisterForm client:load />
+
+  <h1>Connexion</h1>
   <LoginForm client:load />
 </BaseLayout>

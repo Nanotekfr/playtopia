@@ -2,54 +2,97 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Card from '../components/CtaCard.astro';
 import InfosPratiquesCard from '../components/InfosPratiquesCard.astro';
-import Greeting from '../components/Greeting.jsx';
+import Greeting from '../components/Greeting.tsx';
 ---
-<style>
-  .cards, .localisation{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px;
-  }
-
-  h1,h2 {
-    display: flex;
-    justify-content: center;
-  }
-</style>
 
 <BaseLayout pageTitle="Accueil | Runatika">
-  <h1>Meilleur bar a Jeux de Lille<h1>
-  <h2>espace bar, salle de jeux avec événements quotidiens</h2>
+
+  <!-- GREETING -->
+  <div class="greeting-container">
     <Greeting client:load messages={["Hej", "Hallo", "Hola", "Habari"]} />
-  <div class="cards">
+  </div>
+
+  <!-- TITRE SECTION -->
+  <h2 class="section-title">Espace bar, salle de jeux avec événements quotidiens</h2>
+
+  <!-- CARDS -->
+  <div class="cards-container">
     <Card
-        title="Bar"
-        description="L’aventure commence ici !"
-        image="/src/images/barimg.jpg"
-        ctaText="Voir la carte"
-        ctaLink="/src/assets/Atmos Arena - Carte du bar (web).pdf"
-      />
-      <Card
-        title="Salle de jeux"
-        description="Le plaisir de jouer !"
-        image="/src/images/barjeu.jpg"
-        ctaText="Reservé une table"
-        ctaLink="/src/assets/Atmos Arena - Carte du bar (web).pdf"
-      />
-      <Card
-        title="Boutique TCG"
-        description="Des centaines de références : cartes à l'unité, accessoires, produits scellés !"
-        image="/src/images/philibert-JCC.jpg"
-        ctaText="Vers la boutique"
-        ctaLink="/src/assets/Atmos Arena - Carte du bar (web).pdf"
-      />
-    </div>
-    <h2>Où nous trouver et horraires</h2>
-    <div class="localisation">
-      <InfosPratiquesCard
+      title="Bar"
+      description="L’aventure commence ici !"
+      image="/images/barimg.jpg"
+      ctaText="Voir la carte"
+      ctaLink="/src/assets/Atmos Arena - Carte du bar (web).pdf"
+    />
+    <Card
+      title="Salle de jeux"
+      description="Le plaisir de jouer !"
+      image="/images/barjeu.jpg"
+      ctaText="Réserver une table"
+      ctaLink="/src/assets/Atmos Arena - Carte du bar (web).pdf"
+    />
+    <Card
+      title="Boutique TCG"
+      description="Des centaines de références : cartes à l'unité, accessoires, produits scellés !"
+      image="/images/philibert-JCC.jpg"
+      ctaText="Vers la boutique"
+      ctaLink="/src/assets/Atmos Arena - Carte du bar (web).pdf"
+    />
+  </div>
+
+  <!-- INFOS PRATIQUES -->
+  <h2 class="section-title">Où nous trouver et horaires</h2>
+  <div class="infos-container">
+    <InfosPratiquesCard
       mapUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2533.726586119802!2d3.0963136!3d50.6313347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2d59c32e90b0f%3A0xf09d27554e0e62e0!2sFives%20Cail!5e0!3m2!1sfr!2sfr!4v1694468462335!5m2!1sfr!2sfr"
       adresse="Fives Cail, Lille"
-      />
-    </div>
+    />
+  </div>
+
 </BaseLayout>
+
+<style>
+/* GREETING */
+.greeting-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+/* SECTION TITLES */
+.section-title {
+  text-align: center;
+  margin: 2rem 0 1rem 0;
+}
+
+/* CARDS - MOBILE FIRST */
+.cards-container {
+  display: flex;
+  flex-direction: column; /* vertical sur mobile */
+  gap: 20px;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* CARDS - DESKTOP */
+@media screen and (min-width: 768px) {
+  .cards-container {
+    flex-direction: row;      /* horizontal */
+    justify-content: center;  /* centré */
+    flex-wrap: wrap;          /* plusieurs lignes si besoin */
+  }
+  .cards-container > * {
+    max-width: 300px;         /* limite largeur des cards */
+    flex: 1;                  /* occupe l’espace disponible */
+  }
+}
+
+/* INFOS PRATIQUES */
+.infos-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* pour rester responsive sur mobile */
+  margin: 2rem 0;
+}
+</style>

@@ -1,5 +1,5 @@
 import type { APIContext } from "astro";
-import { checkAdmin } from "../../utils/auth";
+import { checkAdmin } from "../../utils/securityAudit";
 
 export async function get({ cookies }: APIContext) {
 	const check = checkAdmin(cookies);
