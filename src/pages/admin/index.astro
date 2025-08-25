@@ -2,6 +2,8 @@
 import EventManager from "../../components/EventManager";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { securityAudit } from "../../utils/securityAudit";
+import fs from "fs";
+import path from "path";
 
 export const prerender = false;
 
@@ -12,16 +14,23 @@ if (!audit.authorized) {
   return Astro.redirect("/login");
 }
 
-const user = audit.user; // infos utilisateur depuis users.json
+const user = audit.user;
+
+// Charge les événements côté serveur depuis src/data/events.json
+const eventsFile = path.resolve("src/data/events.json");
+const events = fs.existsSync(eventsFile)
+  ? JSON.parse(fs.readFileSync(eventsFile, "utf-8"))
+  : [];
 ---
 
 <BaseLayout title="Admin événements">
   <h1>🔧 Gestion des événements</h1>
+
   {user ? (
     <p>Connecté en tant que : {user.username} (rôle : {user.role})</p>
   ) : (
-    <p>Utilisateur non reconnu.</p>
+    <p style={{ color: "red" }}>Utilisateur non reconnu.</p>
   )}
 
-  <EventManager initialEvents={Astro.props.events} client:only="preact" />
+  <EventManager initialEvents={events} client:only="preact" />
 </BaseLayout>

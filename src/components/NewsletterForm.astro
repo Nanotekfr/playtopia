@@ -1,8 +1,172 @@
 ---
 ---
 
-<form class="newsletter" method="POST" action="/api/subscribe">
-  <label for="email">Abonne-toi à la newsletter :</label>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+  .newsletter {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    transform: translateY(0);
+    background: rgba(30, 10, 40, 0.95);
+    border: 2px solid #ffae42;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 0 20px rgba(255, 174, 66, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    z-index: 1000;
+    /* Desktop : pas de max-width pour garder sa taille naturelle */
+  }
+
+  .newsletter.hidden {
+    display: none;
+  }
+
+  .newsletter input {
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+  }
+
+  .newsletter button {
+    background: #ffae42;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .close-btn {
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 8px;
+  }
+
+  /* Bouton flottant glow mystique avec gradient animé */
+  #showNewsletterBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(270deg, #5a326e, #ffae42, #8c5b9e);
+    background-size: 400% 400%;
+    color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 50px;
+    border: 2px solid #ffae42;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 999;
+    display: none;
+    animation: gradientShift 6s ease infinite, glowPulse 2.5s infinite ease-in-out;
+  }
+
+  @keyframes glowPulse {
+    0% {
+      box-shadow: 0 0 5px rgba(255, 174, 66, 0.4), 0 0 10px rgba(90, 50, 110, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(255, 174, 66, 0.8), 0 0 35px rgba(90, 50, 110, 0.7);
+    }
+    100% {
+      box-shadow: 0 0 5px rgba(255, 174, 66, 0.4), 0 0 10px rgba(90, 50, 110, 0.5);
+    }
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* --- Responsive pour mobile --- */
+  @media (max-width: 480px) {
+    .newsletter {
+      width: 90%;
+      max-width: 320px; /* limite seulement sur mobile */
+      padding: 0.8rem;
+      font-size: 0.9rem;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .newsletter input {
+      width: 100%;
+    }
+
+    .newsletter button[type="submit"] {
+      width: 100%;
+      padding: 0.5rem 0;
+    }
+
+    #showNewsletterBtn {
+      padding: 0.6rem 0.8rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<form class="newsletter hidden" id="newsletterForm" method="POST" action="/api/subscribe">
+  <span class="close-btn" id="closeNewsletter">✖</span>
+  <label for="email">✨ Abonne-toi à la newsletter :</label>
   <input type="email" id="email" name="email" placeholder="Ton email..." required />
   <button type="submit">S'inscrire</button>
 </form>
+
+<button id="showNewsletterBtn">✨ Newsletter</button>
+
+<script>
+  const banner = document.getElementById('newsletterForm');
+  const closeBtn = document.getElementById('closeNewsletter');
+  const showBtn = document.getElementById('showNewsletterBtn');
+
+  // Bandeau fermé par défaut
+  if (banner) banner.classList.add('hidden');
+  if (showBtn) showBtn.style.display = 'block';
+
+  // Réouvrir le bandeau
+  if (showBtn) {
+    showBtn.addEventListener('click', () => {
+      if (!(banner instanceof HTMLElement)) return;
+      banner.classList.remove('hidden');
+      banner.style.transform = "translateY(0)";
+      banner.style.opacity = "1";
+      showBtn.style.display = 'none';
+      localStorage.setItem('newsletterClosed', 'false');
+    });
+  }
+
+  // Fermer le bandeau
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      if (!(banner instanceof HTMLElement) || !showBtn) return;
+      banner.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+      banner.style.opacity = "0";
+      banner.style.transform = "translateY(20px)";
+      setTimeout(() => {
+        banner.classList.add('hidden');
+        showBtn.style.display = 'block';
+        localStorage.setItem('newsletterClosed', 'true');
+      }, 400);
+    });
+  }
+
+  // Envoi du formulaire
+  if (banner) {
+    banner.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const emailInput = document.getElementById('email');
+      if (!emailInput || !(emailInput instanceof HTMLInputElement)) return;
+      const email = emailInput.value;
+      console.log('Email soumis:', email);
+      localStorage.setItem('newsletterSubscribed', 'true');
+      banner.classList.add('hidden');
+      if (showBtn) showBtn.style.display = 'block';
+    });
+  }
+</script>

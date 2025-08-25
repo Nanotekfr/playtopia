@@ -1,50 +1,9 @@
 [
 	{
 		"id": "u1",
-		"email": "admin@playtopia.com",
 		"username": "masterofrunes",
-		"passwordHash": "0123456789",
-		"role": "admin"
-	},
-	{
-		"id": "u2",
-		"email": "user1@example.com",
+		"email": "admin@playtopia.com",
 		"passwordHash": "$2b$10$FZzYHvlGzOJ2vD2T4LcXEu9qj7FpuHlqM.LVxTUxkOGT6QtU6.XyW",
-		"role": "user"
-	},
-	{
-		"id": "u3",
-		"email": "test@test.fr",
-		"username": "testuser",
-		"passwordHash": "$2b$10$xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-		"role": "admin"
-	},
-	{
-		"id": "896f0727-9e5b-467b-b1ca-d72d305decb3",
-		"username": "foo",
-		"email": "foobarbaz@gmail.com",
-		"passwordHash": "$2b$10$I.c5cQo2Qjw08GXSsNkm5u2kE75ncNAE2X9W5u6Czwu.A.Is58tqq",
-		"role": "admin"
-	},
-	{
-		"id": "b4366207-4ca6-424d-a411-c6d83b59e5b0",
-		"email": "v@v.fr",
-		"username": "v",
-		"passwordHash": "$2b$10$8kdPk2kMakNsCkE9Hj3oJOOgACrO8eBI6n7icdR0k6nbWbYuJrhOi",
-		"role": "user"
-	},
-	{
-		"id": "e56129ec-e6b2-40fb-aee7-65bedb19f236",
-		"email": "t@t.fr",
-		"username": "t",
-		"passwordHash": "$2b$10$5baG14eQYMawb43Jn2hKP.AOUdVAkYRyMBRXZxOAFVJ2dgmpEqv3.",
-		"role": "admin"
-	},
-	{
-		"id": "e7d9ba70-3bc1-46a7-b716-429be7f8328b",
-		"email": "r@r.fr",
-		"username": "r",
-		"passwordHash": "$2b$10$lI/huP0aE.wmOkR6871bFuJ77H1XCoMhdRV75DVs3M/Lg0szt8I3G",
 		"role": "admin"
 	}
 ]

@@ -1,4 +1,6 @@
-/* dark mode */
+/* ========== Variables & modes ========== */
+
+/* Dark mode */
 :root {
   --color-bg: #1a0f1f;
   --color-text: #eee;
@@ -8,7 +10,7 @@
   --color-header: #5A326E;
 }
 
-/* light mode */
+/* Light mode */
 :root {
   --bg-nav: rgb(255, 255, 254);
   --text-color: rgb(232, 25, 6);
@@ -17,44 +19,66 @@
   --button-color: rgb(255, 174, 66);
 }
 
-html, body {
-  height: 100%;
+/* ========== Reset & box-sizing global ========== */
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  display: flex;
-  flex-direction: column;
+  padding: 0;
 }
 
-body {
-  margin: 0;
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden; /* Empêche scroll horizontal */
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: 'Orbitron', sans-serif;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
+/* ========== Container centré ========== */
+.container {
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+/* ========== Media queries responsive ========== */
+
 /* Smartphones (portrait) */
-@media screen and (width < 599px) {
-  
+@media screen and (max-width: 599px) {
+  .container {
+    padding: 0 3%;
+  }
 }
 
-/* Tablets (portrait), small phones (landscape) */
-@media screen and (600px < width < 899px) {
-  
+/* Tablets portrait / small phones landscape */
+@media screen and (min-width: 600px) and (max-width: 899px) {
+  .container {
+    padding: 0 4%;
+  }
 }
 
-/* Tablets (landscape), small laptops */
-@media screen and (900px < width < 1199px) {
-  
+/* Tablets landscape / small laptops */
+@media screen and (min-width: 900px) and (max-width: 1199px) {
+  .container {
+    padding: 0 4.5%;
+  }
 }
 
 /* Standard desktops and laptops */
-@media screen and (1200px < width < 1599) {
-  
+@media screen and (min-width: 1200px) and (max-width: 1599px) {
+  .container {
+    padding: 0 5%;
+  }
 }
 
 /* Wide screens, 4K monitors */
-@media screen and (width > 1600px) {
-  
+@media screen and (min-width: 1600px) {
+  .container {
+    padding: 0 5%;
+  }
 }

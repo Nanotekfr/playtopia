@@ -3,13 +3,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Card from '../components/CtaCard.astro';
 import InfosPratiquesCard from '../components/InfosPratiquesCard.astro';
 import Greeting from '../components/Greeting.tsx';
+import Newsletter from '../components/NewsletterForm.astro';
 ---
 
 <BaseLayout pageTitle="Accueil | Runatika">
 
   <!-- GREETING -->
   <div class="greeting-container">
-    <Greeting client:load messages={["Hej", "Hallo", "Hola", "Habari"]} />
+    <Greeting client:load messages={["Hej","Hallo","Hola","Habari"]} />
   </div>
 
   <!-- TITRE SECTION -->
@@ -49,6 +50,9 @@ import Greeting from '../components/Greeting.tsx';
     />
   </div>
 
+  <!-- NEWSLETTER FLOTTANTE -->
+  <Newsletter />
+
 </BaseLayout>
 
 <style>
@@ -65,34 +69,95 @@ import Greeting from '../components/Greeting.tsx';
   margin: 2rem 0 1rem 0;
 }
 
-/* CARDS - MOBILE FIRST */
+/* ===== CARDS CONTAINER ===== */
 .cards-container {
   display: flex;
-  flex-direction: column; /* vertical sur mobile */
+  flex-direction: column;
   gap: 20px;
   align-items: center;
-  width: 90%;
+  width: 100%;
+  max-width: 90%;
   margin: 0 auto;
 }
 
-/* CARDS - DESKTOP */
+/* Desktop */
 @media screen and (min-width: 768px) {
   .cards-container {
-    flex-direction: row;      /* horizontal */
-    justify-content: center;  /* centré */
-    flex-wrap: wrap;          /* plusieurs lignes si besoin */
+    flex-direction: row;
+    justify-content: center; /* centre les cartes au lieu de space-between */
+    flex-wrap: wrap;
+    gap: 30px; /* espace régulier */
   }
+
   .cards-container > * {
-    max-width: 300px;         /* limite largeur des cards */
-    flex: 1;                  /* occupe l’espace disponible */
+    flex: 1 1 300px; /* occupe au moins 300px mais peut rétrécir */
+    max-width: 300px;
   }
 }
 
-/* INFOS PRATIQUES */
+/* ===== INFOS PRATIQUES ===== */
 .infos-container {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap; /* pour rester responsive sur mobile */
-  margin: 2rem 0;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 90%;
+  margin: 2rem auto;
+}
+
+/* Desktop */
+@media screen and (min-width: 768px) {
+  .infos-container {
+    flex-direction: row;
+    justify-content: center; /* centre horizontalement */
+    gap: 30px;
+  }
+
+  .infos-container > * {
+    flex: 1 1 350px;
+    max-width: 350px;
+  }
+}
+
+/* Mobile étroit */
+@media screen and (max-width: 767px) {
+  .cards-container > *, .infos-container > * {
+    max-width: 280px;
+  }
+}
+
+/* ===== NEWSLETTER FLOTTANTE ===== */
+.newsletter {
+  position: fixed;
+  bottom: 20px;
+  right: 40px; /* décale un peu du bord droit */
+  background: rgba(30, 10, 40, 0.95);
+  border: 2px solid #ffae42;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 0 20px rgba(255, 174, 66, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 1000;
+}
+
+/* Réouverture bouton */
+#showNewsletterBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 40px; /* même décalage que le bandeau */
+  background: linear-gradient(270deg, #5a326e, #ffae42, #8c5b9e);
+  background-size: 400% 400%;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border-radius: 50px;
+  border: 2px solid #ffae42;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 999;
+  display: none;
+  animation: gradientShift 6s ease infinite, glowPulse 2.5s infinite ease-in-out;
 }
 </style>

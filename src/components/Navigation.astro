@@ -4,6 +4,11 @@ import Social from './Social.astro';
 ---
 
 <style>
+/* Box-sizing global pour éviter débordements */
+nav, .nav-links, .logo, .controls {
+  box-sizing: border-box;
+}
+
 nav {
   position: sticky;
   top: 0;
@@ -11,10 +16,12 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 200px;
+  width: 100vw;              /* prend toute la largeur de la fenêtre */
+  padding: 10px 20px;        /* padding inclus dans box-sizing */
   background-color: var(--bg-nav);
   color: var(--text-color);
   border-bottom: solid 5px orange;
+  overflow-x: hidden;         /* empêche le scroll horizontal */
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -38,7 +45,7 @@ nav {
   border: none;
   color: var(--text-color);
   cursor: pointer;
-  display: none; /* masqué par défaut */
+  display: none;
 }
 
 .nav-links {
@@ -86,10 +93,6 @@ nav {
 
 /* Smartphones */
 @media screen and (max-width: 599px) {
-  nav {
-    padding: 10px 20px;
-  }
-
   .logo {
     font-size: 10px;
   }
@@ -126,36 +129,6 @@ nav {
     display: block;
   }
 }
-
-/* Tablettes (portrait & paysage) */
-@media screen and (min-width: 600px) and (max-width: 1199px) {
-  nav {
-    padding: 10px 50px;
-  }
-  .burger {
-    display: none;
-  }
-}
-
-/* Laptops / desktops standards */
-@media screen and (min-width: 1200px) and (max-width: 1599px) {
-  nav {
-    padding: 10px 100px;
-  }
-  .burger {
-    display: none;
-  }
-}
-
-/* Très grands écrans (1600px et +) */
-@media screen and (min-width: 1600px) {
-  nav {
-    padding: 10px 300px;
-  }
-  .burger {
-    display: none;
-  }
-}
 </style>
 
 <nav>
@@ -184,6 +157,6 @@ nav {
 <script is:inline>
   function toggleMenu() {
     const menu = document.getElementById('navLinks');
-    menu.classList.toggle('show');
+    menu?.classList.toggle('show');
   }
 </script>

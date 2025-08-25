@@ -4,10 +4,19 @@ const username = "nanotekfr";
 ---
 
 <style>
-  footer {
-  bottom: 0;
-  left: 0;
-  width: 100%;
+/* Box-sizing global */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden; /* empêche le scroll horizontal global */
+}
+
+footer {
+  width: 100vw;          /* prend toute la largeur de la fenêtre */
   background: var(--color-header);
   color: white;
   text-align: center;
@@ -17,76 +26,94 @@ const username = "nanotekfr";
   z-index: 10;
 }
 
+.footer-container {
+  max-width: 1600px;     /* limite largeur du contenu */
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
+.footer-top {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.newsletter input {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.newsletter button {
+  background: var(--button-color);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-bottom a {
+  margin-left: 16px;
+  text-decoration: none;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.footer-bottom a:hover {
+  color: var(--accent-color);
+}
+
+/* Responsive pour mobile */
+@media (max-width: 768px) {
   .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
+    padding: 0 5%; /* padding relatif sur mobile */
+  }
+  .footer-bottom {
     flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
-
-  .footer-top {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .newsletter {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .newsletter input {
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-
-  .newsletter button {
-    background: var(--button-color);
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: 12px;
-  }
-
   .footer-bottom a {
-    margin-left: 16px;
-    text-decoration: none;
-    color: var(--text-color);
-    cursor: pointer;
+    margin-left: 0;
   }
-
-  .footer-bottom a:hover {
-    color: var(--accent-color);
-  }
-
-  @media (max-width: 768px) {
-    .footer-bottom {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-    }
-  }
+}
 </style>
 
 <footer>
   <div class="footer-container">
     <div class="footer-top">
+      <!-- Ici tu peux ajouter des sections newsletter, liens rapides, etc. -->
     </div>
 
     <div class="footer-bottom">
       <div>
-        &copy; 2025 Dylan C. Make with 🧠- Tous droits réservés.
+        &copy; 2025 Dylan C. Make with 🧠 - Tous droits réservés.
         <a href="/legals/cgv">CGV</a>
         <a href="/legals/cgu">CGU</a>
-        <a href="/politique-de-confidentialite">Politique de confidentialité</a></>
-        <p>Apprenez-en plus sur mes projets sur <a href={`https://www.${platform}.com/${username}`}>{platform}</a> !</p>
+        <a href="/politique-de-confidentialite">Politique de confidentialité</a>
+        <p>Apprenez-en plus sur mes projets sur 
+          <a href={`https://www.${platform}.com/${username}`} target="_blank" rel="noopener noreferrer">{platform}</a> !
+        </p>
       </div>
     </div>
   </div>

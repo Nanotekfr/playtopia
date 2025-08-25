@@ -1,13 +1,28 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import LoginForm from '../components/LoginForm.tsx';
-import RegisterForm from '../components/RegisterForm.tsx';
+import LoginForm from "../components/LoginForm";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { securityAudit } from "../utils/securityAudit";
+
+export const prerender = false;
+
+// Vérifie si l'utilisateur est déjà connecté
+const audit = securityAudit(Astro.cookies);
+
+// Si une session valide existe et que le rôle est admin, redirige vers /admin
+if (audit.authorized && audit.user?.role === "admin") {
+  return Astro.redirect("/admin");
+}
 ---
 
-<BaseLayout title="Connexion">
-  <h1>Inscription</h1>
-  <RegisterForm client:load />
+<BaseLayout title="Connexion Admin">
+  <div style="max-width: 600px; margin: 4rem auto; padding: 1rem;">
+    <h1 style="text-align:center; margin-bottom:2rem;">🔐 Connexion à l’espace Admin</h1>
 
-  <h1>Connexion</h1>
-  <LoginForm client:load />
+    <!-- Formulaire de connexion -->
+    <LoginForm client:idle redirectUrl="/admin" />
+
+    <p style="text-align:center; margin-top:1rem; font-size:0.9rem; color:gray;">
+      Si vous n’avez pas de compte, contactez l’administrateur.
+    </p>
+  </div>
 </BaseLayout>
